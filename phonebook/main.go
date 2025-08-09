@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+var Phonebook = make(map[int]Contact)
+
 // Contacts format
 type Contact struct {
 	Name    string
@@ -18,25 +20,25 @@ type Contact struct {
 	Email   string
 }
 
-// Phonebook map
-var Phonebook map[int]Contact
-
 // Print Phonebook
-func PrintBook(Phonebook map[int]Contact) {
+func PrintBook(Phonebook map[int]Contact) string {
 	var keys []int
 	for id := range Phonebook {
 		keys = append(keys, id)
 	}
 	sort.Ints(keys)
 
+	var builder strings.Builder
+
 	for _, id := range keys {
 		contact := Phonebook[id]
-		fmt.Printf("Όνομα/Επώνυμο: %s %s\nΔιεύθηνση: %s\nΤηλέφωνο: %s\nEmail: %s\n", contact.Name, contact.Surname, contact.Address, contact.Phone, contact.Email)
+		builder.WriteString(fmt.Sprintf("Όνομα/Επώνυμο: %s %s\nΔιεύθηνση: %s\nΤηλέφωνο: %d\nEmail: %s\n", contact.Name, contact.Surname, contact.Address, contact.Phone, contact.Email))
 	}
+	return builder.String()
 }
 
 // Shearch Name on Phonebook
-/*func SearchName(Phonebook map[string]string) {
+func SearchName(Phonebook map[string]string) {
 	var input string
 	fmt.Print("Δώσε όνομα: ")
 	fmt.Scanln(&input)
@@ -45,7 +47,7 @@ func PrintBook(Phonebook map[int]Contact) {
 	} else {
 		fmt.Println("Δεν βρεθηκε αυτό το όνομα στον κατάλογο")
 	}
-}*/
+}
 
 // Add a telephone number
 func AddPhone(Phonebook map[int]Contact) {
@@ -78,10 +80,9 @@ func AddPhone(Phonebook map[int]Contact) {
 func LoadPhonebook(path string) (map[int]Contact, error) {
 	phonebook := make(map[int]Contact)
 
-	file, err := os.Open("phonebook.txt")
+	file, err := os.Open(path)
 	if err != nil {
-		fmt.Printf("Σφάλμα αρχείου καταλόγου %s", err)
-		return
+		return nil, err
 	}
 	defer file.Close()
 
@@ -94,6 +95,7 @@ func LoadPhonebook(path string) (map[int]Contact, error) {
 
 		if len(parts) != 5 {
 			fmt.Println("Σφάλμα στη γραμμή:", line)
+			continue
 		}
 
 		phone, err := strconv.Atoi((strings.TrimSpace(parts[3])))
@@ -119,11 +121,15 @@ func LoadPhonebook(path string) (map[int]Contact, error) {
 	return phonebook, nil
 }
 
+func SavePhonebook(book map[int]Contact) {
+
+}
+
 func main() {
 
 	for {
 		var input int
-		fmt.Print("Επέλεξε: \nΑνάγνωση καταλόγου (1),\nΠροσθήκη στον κατάλογο (2),\nΑναζήτηση στον κατάλογο (3)\nΈξοδος (4)\n")
+		fmt.Print("Επέλεξε: \nΑνάγνωση καταλόγου (1),\nΠροσθήκη στον κατάλογο (2),\nΑναζήτηση στον κατάλογο (3)\nΕισαγωγή καταλόγου (4)\nΑποθήκευση καταλόγου (5)\nΈξοδος (6)\n")
 		if _, err := fmt.Scanln(&input); err != nil {
 			fmt.Println("Μη έγκυρη είσοδος")
 			var trash string
@@ -132,12 +138,21 @@ func main() {
 		}
 		switch input {
 		case 1:
-			PrintBook(Phonebook)
+			output := PrintBook(Phonebook)
+			fmt.Print(output)
 		case 2:
 			AddPhone(Phonebook)
-		case 3:
-			SearchName(Phonebook)
+			//	case 3:
+			//		SearchName(phonebook)
 		case 4:
+			LoadPhonebook("phonebook.txt")
+		case 5:
+			data := PrintBook(Phonebook)
+			err := os.WriteFile("phonebook.txt", []byte(data), 0644)
+			if err != nil {
+				fmt.Println("Σφάλμα αποθηκευσης")
+			}
+		case 6:
 			fmt.Println("Έξοδος...")
 			return
 		default:
