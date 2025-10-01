@@ -19,15 +19,34 @@ func main() {
 	image[1] = [2]int{1, 0}
 	image[2] = [2]int{2, 0}
 	image[3] = [2]int{2, 1}
-
+	rows := len(grid)
+	cols := len(grid[0])
+	offsetRow := 2
+	offsetCol := 4
+	maxRow, maxCol := 0, 0
 	for i := 0; i < 4; i++ {
-		grid[image[i][0]][image[i][1]] = "#"
-	}
-	for row := range grid {
-		for col := range grid[row] {
-			fmt.Print(grid[row][col])
+		if image[i][0] > maxRow {
+			maxRow = image[i][0]
 		}
-		fmt.Println()
+		if image[i][1] > maxCol {
+			maxCol = image[i][1]
+		}
+	}
+
+	if maxRow+offsetRow >= rows || maxCol+offsetCol >= cols {
+		fmt.Println("Doesn't fit here")
+	} else {
+		for i := 0; i < 4; i++ {
+			row := image[i][0] + offsetRow
+			col := image[i][1] + offsetCol
+			grid[row][col] = "#"
+		}
+		for row := range grid {
+			for col := range grid[row] {
+				fmt.Print(grid[row][col])
+			}
+			fmt.Println()
+		}
 	}
 
 }
