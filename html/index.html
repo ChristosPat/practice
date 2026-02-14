@@ -1,0 +1,27 @@
+<!DOCTYPE html> <html>
+    <head>
+        <title>Το ASCII Art Site μου</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    
+    <body>
+        <h1>Καλωσήρθατε στον ASCII Generator!</h1>
+        <h2> Welocome to ASCII Generator</h2>
+        <p>Γράψτε κάτι παρακάτω:</p>
+        <form action="/ascii-art" method="post">
+            <label for="main-text">Input text:</label>
+            <br>
+            <textarea name="user-data" id="main-text" cols="50" rows="4">Write here</textarea>
+          <br>
+          <label for="banner-select">Select style:</label>
+          <select name="banner" id="banner-select">
+          <option value="standard">Standard</option>
+          <option value="shadow">shadow </option>
+          <option value="thinkertoy">Thinkertoy</option>
+        </select>
+        <br><br>
+            <button type="submit">Click to convert</button>
+        </form>
+    
+    </body>
+</html>
