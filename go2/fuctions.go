@@ -3,14 +3,15 @@ package main
 import "fmt"
 
 func main() {
-	colours := []string{"red", "blue", "green"}
-
-	colours = append(colours, "yellow", "orange")
-
-	fmt.Print("Colours :")
-	for i := range colours {
-		fmt.Print(colours[i], " ")
+	phone := map[string]int{
+		"Christos": 697712346,
+		"Giorgos":  654321987,
+		"Kostas":   698754123,
 	}
-	fmt.Println()
-	fmt.Println(len(colours))
+
+	phone["Antonis"] = 693258741
+
+	for i, j := range phone {
+		fmt.Println(i, ":", j)
+	}
 }
