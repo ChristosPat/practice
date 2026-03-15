@@ -30,7 +30,7 @@ func main() {
 	//offsets
 	offsets := [][2]int{
 		{0, 0},
-		{0, 2},
+		{1, 0},
 	}
 
 	//fit-fill or discard

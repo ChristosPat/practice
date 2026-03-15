@@ -1,6 +1,11 @@
 body {
     background-color: #f0f8ff;
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
 }
 
 h1{
@@ -22,10 +27,32 @@ button{
     border-radius: 30px;
     cursor: pointer;
 }
+button:hover{
+    background-color: darkgreen;
+    transform: scale(1.1);
+}
 select{
     background-color: chartreuse;
     color: red;
     padding: 5px 5px;
     border-radius: 10px;
     border: none;
+}
+.result-container {
+    background-color: #1e1e1e; /* Σκούρο γκρι/μαύρο του VS Code */
+    color: #00ff00;            /* Πράσινο του "Matrix" ή λευκό */
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #333;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); /* Σκιά για να φαίνεται τρισδιάστατο */
+    margin-top: 30px;
+    width: 80%;                /* Για να μην "κολλάει" στις άκρες */
+    overflow-x: auto;          /* Αν το ASCII είναι πολύ πλατύ, βγάζει scrollbar αντί να χαλάσει το layout */
+}
+
+#ascii-result {
+    font-family: 'Courier New', monospace; /* Απαραίτητο για να μην χαλάνε οι χαρακτήρες */
+    font-size: 14px;
+    line-height: 1.2;          /* Σφιχτή απόσταση γραμμών για να φαίνεται σωστά το σχέδιο */
+    margin: 0;                 /* Αφαιρεί τα προεπιλεγμένα κενά */
 }
