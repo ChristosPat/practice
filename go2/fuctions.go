@@ -7,5 +7,10 @@ func main() {
 
 	colours = append(colours, "yellow", "orange")
 
-	fmt.Println(colours)
+	fmt.Print("Colours :")
+	for i := range colours {
+		fmt.Print(colours[i], " ")
+	}
+	fmt.Println()
+	fmt.Println(len(colours))
 }
